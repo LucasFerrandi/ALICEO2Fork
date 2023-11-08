@@ -155,6 +155,7 @@ void FilteringSpec::clear()
   mGIDToTableID.clear();
   mITSTrackIDCache.clear();
   mITSClusterIDCache.clear();
+  mTPCTrackIDCache.clear();
 }
 
 void FilteringSpec::fillData(const o2::globaltracking::RecoContainer& recoData)
@@ -272,18 +273,21 @@ void FilteringSpec::processTracksOfVertex(const o2::dataformats::VtxTrackRef& tr
 int FilteringSpec::processBarrelTrack(GIndex idx, const o2::globaltracking::RecoContainer& recoData)
 {
   int res = selectTrack(idx, recoData);
-  if (res < 0) {
+  if (res < 0) { // if track was NOT selected, return a negative value
     return res;
   }
   mNeedToSave = true;
   auto contributorsGID = recoData.getSingleDetectorRefs(idx);
   //
   // here is example of processing the ITS track
-  if (contributorsGID[GID::ITS].isIndexSet()) {
-    mITSTrackIDCache[contributorsGID[GID::ITS]] = 0;
+  if (contributorsGID[GID::ITS].isIndexSet()) { // does the track has contributions from the ITS detector
+    mITSTrackIDCache[contributorsGID[GID::ITS]] = 0; // assign a value of 0 to the mITSTrackIDCache using the global track ID of the ITS track as the key, indicating that it will be processed
+  }
+  if (contributorsGID[GID::TPC].isIndexSet()) { // does the track has contributions from the TPC detector
+    mTPCTrackIDCache[contributorsGID[GID::TPC]] = 0; // assign a value of 0 to the mTPCTrackIDCache using the global track ID of the TPC track as the key, indicating that it will be processed
   }
 
-  return res;
+  return res; // if track was INDEED selected, return positive value for further processing
 }
 
 bool FilteringSpec::selectTrack(GIndex id, const o2::globaltracking::RecoContainer& recoData)

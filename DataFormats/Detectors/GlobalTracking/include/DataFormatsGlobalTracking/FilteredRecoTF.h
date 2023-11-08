@@ -22,6 +22,7 @@
 #include "DataFormatsITS/TrackITS.h"
 #include "DataFormatsITSMFT/CompCluster.h"
 #include "SimulationDataFormat/MCCompLabel.h"
+#include "DataFormatsTPC/TrackTPC.h"
 
 namespace o2::dataformats
 {
@@ -51,6 +52,10 @@ struct FilteredRecoTF {
   std::vector<o2::itsmft::ROFRecord> ITSClusterROFs{};
   std::vector<o2::itsmft::CompClusterExt> ITSClusters{};
   std::vector<unsigned char> ITSClusterPatterns{};
+
+  // TPC tracks
+  // should I include TPCTrackROFs (which currently doesn't exist)?
+  std::vector<o2::tpc::TrackTPC> TPCTracks{};
 
   void clear();
 

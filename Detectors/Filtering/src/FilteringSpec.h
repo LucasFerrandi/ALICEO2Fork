@@ -22,6 +22,7 @@
 #include "DataFormatsFV0/RecPoints.h"
 #include "DataFormatsGlobalTracking/RecoContainer.h"
 #include "DataFormatsITS/TrackITS.h"
+#include "DataFormatsTPC/TrackTPC.h"
 #include "DataFormatsMFT/TrackMFT.h"
 #include "DataFormatsMCH/TrackMCH.h"
 #include "DataFormatsTPC/TrackTPC.h"
@@ -88,6 +89,9 @@ class FilteringSpec : public Task
   bool mNeedToSave = false;                // flag that there was something selected to save
   std::map<int, int> mITSTrackIDCache{};   // cache for selected ITS track IDS
   std::map<int, int> mITSClusterIDCache{}; // cache for selected ITS clusters
+  //bool mNeedToSave_TPC = false; //is this necessary? Are we going to save TPC and ITS tracks separately?
+  // I believe not, since the selection is made regardless of which detector contribution
+  std::map<int, int> mTPCTrackIDCache{};   // cache for selected TPC track IDs
 
   // unordered map connects global indices and table indices of barrel tracks
   std::unordered_map<GIndex, int> mGIDToTableID;

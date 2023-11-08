@@ -43,4 +43,7 @@ void FilteredRecoTF::clear()
   ITSClusterROFs.clear();
   ITSClusters.clear();
   ITSClusterPatterns.clear();
+
+  // TPC tracks
+  TPCTracks.clear();
 }
